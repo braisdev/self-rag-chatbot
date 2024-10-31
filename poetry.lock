@@ -610,6 +610,22 @@ files = [
 ]
 
 [[package]]
+name = "exa-py"
+version = "1.5.1"
+description = "Python SDK for Exa API."
+optional = false
+python-versions = "*"
+files = [
+    {file = "exa_py-1.5.1-py3-none-any.whl", hash = "sha256:66315909547e2e205c51acfcade6398b4fa15aa4556abf053a26ebbfb1f5b58b"},
+    {file = "exa_py-1.5.1.tar.gz", hash = "sha256:f8798e1a95d19e13b9b24c35af28af0aeeb1e28ccb69987cdb1476a04424ace5"},
+]
+
+[package.dependencies]
+openai = ">=1.10.0"
+requests = "*"
+typing-extensions = "*"
+
+[[package]]
 name = "fastapi"
 version = "0.115.2"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
@@ -1439,6 +1455,21 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<10.0.0"
 typing-extensions = ">=4.7"
 
 [[package]]
+name = "langchain-exa"
+version = "0.2.0"
+description = "An integration package connecting Exa and LangChain"
+optional = false
+python-versions = "<4.0,>=3.9"
+files = [
+    {file = "langchain_exa-0.2.0-py3-none-any.whl", hash = "sha256:6b295600c1da28ea413bba6dbac454862042cee79b1204872930e700b39bb5c6"},
+    {file = "langchain_exa-0.2.0.tar.gz", hash = "sha256:0373faf5f181b4cb4d35796d66b3950c107efed896f9859ceec4a4d306de47de"},
+]
+
+[package.dependencies]
+exa-py = ">=1.0.8,<2.0.0"
+langchain-core = ">=0.3.0,<0.4.0"
+
+[[package]]
 name = "langchain-openai"
 version = "0.2.3"
 description = "An integration package connecting OpenAI and LangChain"
@@ -1467,6 +1498,31 @@ files = [
 
 [package.dependencies]
 langchain-core = ">=0.3.0,<0.4.0"
+
+[[package]]
+name = "langfuse"
+version = "2.53.3"
+description = "A client library for accessing langfuse"
+optional = false
+python-versions = "<4.0,>=3.8.1"
+files = [
+    {file = "langfuse-2.53.3-py3-none-any.whl", hash = "sha256:9fce8c70e77d03aa64fca474e254135ba379189bbafa2fdb23b255bda16c5b04"},
+    {file = "langfuse-2.53.3.tar.gz", hash = "sha256:702ee42669f8283c0b4400fdf039f13b896e18c8b94ad20c079148c2894cbc64"},
+]
+
+[package.dependencies]
+anyio = ">=4.4.0,<5.0.0"
+backoff = ">=1.10.0"
+httpx = ">=0.15.4,<1.0"
+idna = ">=3.7,<4.0"
+packaging = ">=23.2,<25.0"
+pydantic = ">=1.10.7,<3.0"
+wrapt = ">=1.14,<2.0"
+
+[package.extras]
+langchain = ["langchain (>=0.0.309)"]
+llama-index = ["llama-index (>=0.10.12,<2.0.0)"]
+openai = ["openai (>=0.27.8)"]
 
 [[package]]
 name = "langgraph"
@@ -3922,4 +3978,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "3b6f480bb0abf01668327fa58d469760f3b6b4558937b6c3a3c376516e294898"
+content-hash = "31855d12de6c66c765ca4fae7856dff1ace0fd3fb4ac7aa0bb7d1f2e38c67f98"

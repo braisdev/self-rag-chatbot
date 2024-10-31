@@ -17,6 +17,8 @@ python-dotenv = "^1.0.1"
 pytest = "^8.3.3"
 langchain-text-splitters = "^0.3.0"
 langchain-openai = "^0.2.3"
+langchain-exa = "^0.2.0"
+langfuse = "^2.53.3"
 
 
 [build-system]

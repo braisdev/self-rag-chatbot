@@ -106,19 +106,24 @@ def ingest_documents(
         raise
 
 
-def initialize_retriever(collection_name: str = "rag_chroma") -> VectorStoreRetriever:
+def initialize_retriever(collection_name: str = "rag_chroma",
+                         persist_directory: str = "./.chroma") -> VectorStoreRetriever:
     """
     Initializes a VectorStoreRetriever.
     Args:
+        persist_directory: The directory where the vector store is persisted.
         collection_name: A name of the collection in the vector store.
 
     Returns:
         A VectorStoreRetriever.
     """
-
     try:
+        embedding_function = OpenAIEmbeddings()
+
         vectorstore = Chroma(
-            collection_name=collection_name
+            persist_directory=persist_directory,
+            collection_name=collection_name,
+            embedding_function=embedding_function,
         ).as_retriever()
 
         logger.info(f"Initialized VectorStoreRetriever: {collection_name}")
@@ -135,20 +140,28 @@ def main():
     logging.basicConfig(level=logging.INFO)
     load_dotenv()
 
-    urls = [
-        "https://selfrag.github.io/",
-        "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
-        "https://lilianweng.github.io/posts/2024-07-07-hallucination/"
-    ]
+    ingest = False
 
-    docs = load_documents(urls)
-    split_docs = split_documents(docs)
-    persist_directory = "./.chroma"
-    ingest_documents(split_docs, persist_directory)
+    if ingest:
+        urls = [
+            "https://selfrag.github.io/",
+            "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
+            "https://lilianweng.github.io/posts/2024-07-07-hallucination/"
+        ]
 
-    retriever = initialize_retriever()
+        docs = load_documents(urls)
+        split_docs = split_documents(docs)
+        persist_directory = "./.chroma"
+        ingest_documents(split_docs, persist_directory)
 
-    print("The end.")
+        print("Documents has been successfully ingested.")
+
+    else:
+        retriever = initialize_retriever()
+
+        test = retriever.invoke("Self Rag")
+
+        print("fin")
 
 
 if __name__ == "__main__":

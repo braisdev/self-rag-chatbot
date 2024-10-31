@@ -29,8 +29,7 @@ def web_search(state: GraphState) -> Dict[str, Any]:
     else:
         documents = [web_results]
 
-    print("fin")
-
+    return {"documents": documents, "question": question}
 
 if __name__ == "__main__":
 
