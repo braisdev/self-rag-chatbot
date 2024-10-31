@@ -5,6 +5,7 @@ from langchain_chroma import Chroma
 from langchain_community.document_loaders import WebBaseLoader
 from typing import List
 from langchain_core.documents import Document
+from langchain_core.vectorstores import VectorStoreRetriever
 from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -105,6 +106,30 @@ def ingest_documents(
         raise
 
 
+def initialize_retriever(collection_name: str = "rag_chroma") -> VectorStoreRetriever:
+    """
+    Initializes a VectorStoreRetriever.
+    Args:
+        collection_name: A name of the collection in the vector store.
+
+    Returns:
+        A VectorStoreRetriever.
+    """
+
+    try:
+        vectorstore = Chroma(
+            collection_name=collection_name
+        ).as_retriever()
+
+        logger.info(f"Initialized VectorStoreRetriever: {collection_name}")
+
+        return vectorstore
+
+    except Exception as e:
+        logger.error(f"Failed to initialize retriever: {e}")
+        raise
+
+
 def main():
     """Main function to load environment variables and process documents."""
     logging.basicConfig(level=logging.INFO)
@@ -120,6 +145,10 @@ def main():
     split_docs = split_documents(docs)
     persist_directory = "./.chroma"
     ingest_documents(split_docs, persist_directory)
+
+    retriever = initialize_retriever()
+
+    print("The end.")
 
 
 if __name__ == "__main__":
