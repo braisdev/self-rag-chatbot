@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 
-
+from graph.chains.answer_grader import GradeAnswer, answer_grader
 from graph.chains.hallucination_grader import GradeHallucination, hallucination_grader
 from graph.chains.retrieval_grader import GradeDocuments, retrieval_grader
 from ingestion import initialize_retriever
@@ -101,6 +101,42 @@ def test_hallucination_grader_answer_no() -> None:
 
     res: GradeHallucination = hallucination_grader.invoke(
         {"context": docs, "generation": "La patata es una fruta del banano."},
+        config={"callbacks": [langfuse_handler]},
+    )
+
+    assert not res.binary_score
+
+
+def test_answer_grader_answer_yes() -> None:
+    langfuse_handler = CallbackHandler(
+        host="https://cloud.langfuse.com"
+    )
+
+    question = "Self Rag"
+    retriever = initialize_retriever(
+        persist_directory="../../../.chroma"
+    )
+    docs = retriever.invoke(question)
+
+    generation = generation_chain.invoke({"context": docs, "question": question})
+
+    res: GradeAnswer = answer_grader.invoke(
+        {"question": question, "generation": generation},
+        config={"callbacks": [langfuse_handler]},
+    )
+
+    assert res.binary_score
+
+
+def test_answer_grader_answer_no() -> None:
+    langfuse_handler = CallbackHandler(
+        host="https://cloud.langfuse.com"
+    )
+
+    question = "Self Rag"
+
+    res: GradeAnswer = answer_grader.invoke(
+        {"question": question, "generation": "Omelette is black"},
         config={"callbacks": [langfuse_handler]},
     )
 

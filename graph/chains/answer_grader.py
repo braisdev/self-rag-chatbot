@@ -28,4 +28,4 @@ prompt_components = [
 
 answer_grader_prompt = ChatPromptTemplate.from_messages(prompt_components)
 
-answer_grader= answer_grader_prompt | structured_llm_grader
+answer_grader = answer_grader_prompt | structured_llm_grader
