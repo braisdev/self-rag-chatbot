@@ -4,9 +4,10 @@ from graph.state import GraphState
 from ingestion import initialize_retriever
 
 
-def retrieve(graph_state: GraphState) -> Dict[str, Any]:
+def retrieve(state: GraphState) -> Dict[str, Any]:
     print("---RETRIEVER---")
-    question = graph_state["question"]
+
+    question = state.question
 
     retriever = initialize_retriever()
     documents = retriever.invoke(question)

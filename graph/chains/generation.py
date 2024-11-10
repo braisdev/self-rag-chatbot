@@ -1,4 +1,13 @@
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
+from langfuse.callback import CallbackHandler
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Create LLM instance from OpenAI
+llm = ChatOpenAI(model_name="gpt-4o-mini")
 
 
 prompt_components = [
@@ -12,3 +21,5 @@ prompt_components = [
 ]
 
 prompt = ChatPromptTemplate.from_messages(prompt_components)
+
+generation_chain = prompt | llm | StrOutputParser()
