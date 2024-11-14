@@ -10,5 +10,5 @@ if __name__ == "__main__":
         host="https://cloud.langfuse.com"
     )
 
-    print(app.invoke(input={"question": "what is self-rag strategy"},
+    print(app.invoke(input={"question": "HOW CAN I MAKE PIZZA IN ON LINE"},
                      config={"callbacks": [langfuse_handler]}))

@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from graph.chains.answer_grader import GradeAnswer, answer_grader
 from graph.chains.hallucination_grader import GradeHallucination, hallucination_grader
 from graph.chains.retrieval_grader import GradeDocuments, retrieval_grader
+from graph.chains.router import RouteQuery, question_router
 from ingestion import initialize_retriever
 
 from pprint import pprint
@@ -141,3 +142,36 @@ def test_answer_grader_answer_no() -> None:
     )
 
     assert not res.binary_score
+
+
+def test_router_to_vectorstore() -> None:
+
+    langfuse_handler = CallbackHandler(
+        host="https://cloud.langfuse.com"
+    )
+
+    question = "Self Rag"
+
+    res: RouteQuery = question_router.invoke(
+        {"question": question},
+        config={"callbacks": [langfuse_handler]},
+    )
+
+    assert res.datasource == "vectorstore"
+
+
+def test_router_to_web_search() -> None:
+
+    langfuse_handler = CallbackHandler(
+        host="https://cloud.langfuse.com"
+    )
+
+    question = "How to make pizza"
+
+    res: RouteQuery = question_router.invoke(
+        {"question": question},
+        config={"callbacks": [langfuse_handler]},
+    )
+
+    assert res.datasource == "websearch"
+
