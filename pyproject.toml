@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Brais Maneiro Sánchez <brais.maneiro@netexlearning.com>"]
 readme = "README.md"
+packages = [{ include = "graph"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -19,6 +20,7 @@ langchain-text-splitters = "^0.3.0"
 langchain-openai = "^0.2.3"
 langchain-exa = "^0.2.0"
 langfuse = "^2.53.3"
+langgraph-cli = "^0.1.59"
 
 
 [build-system]
